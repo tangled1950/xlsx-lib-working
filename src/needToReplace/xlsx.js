@@ -9,8 +9,8 @@ function make_xlsx_lib(XLSX){
     /*global cptable:true, window */
     if(typeof module !== "undefined" && typeof require !== 'undefined') {
         if(typeof cptable === 'undefined') {
-            if(typeof global !== 'undefined') global.cptable = require('./dist/cpexcel.js');
-            else if(typeof window !== 'undefined') window.cptable = require('./dist/cpexcel.js');
+            if(typeof global !== 'undefined') global.cptable = require('xlsx/dist/cpexcel.js');
+            else if(typeof window !== 'undefined') window.cptable = require('xlsx/dist/cpexcel.js');
         }
     }
 
@@ -2837,7 +2837,7 @@ function make_xlsx_lib(XLSX){
     if(typeof JSZipSync !== 'undefined') jszip = JSZipSync;
     if(typeof exports !== 'undefined') {
         if(typeof module !== 'undefined' && module.exports) {
-            if(typeof jszip === 'undefined') jszip = require('./jszip.js');
+            if(typeof jszip === 'undefined') jszip = require('xlsx/jszip.js');
         }
     }
 

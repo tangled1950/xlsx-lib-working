@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import XLSX from 'xlsx';
+import XLSX from './needToReplace/xlsx';
 import saveAs from 'file-saver';
 
 class App extends Component {
