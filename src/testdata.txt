@@ -21,3 +21,6 @@ wb.SheetNames.push('New Sheet');
     ws['!ref']="A1:G99";
 
     wb.Sheets['New Sheet'] = ws;
+
+
+https://github.com/alexandrudev111/json2excel/blob/master/src/App.js
