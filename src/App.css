@@ -26,3 +26,13 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.dropzone {
+	background-color: lightblue;
+	height: 100%;
+}
+.dropzone-active {
+	background-color: lightgreen;
+	height: 100%;
+	outline: 4px dashed red;
+}

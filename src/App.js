@@ -5,6 +5,7 @@ import './App.css';
 import XLSX from '../loaders/xlsx-loader!xlsx';
 //import XLSX from 'data-validation-xlsx';
 import saveAs from 'file-saver';
+import XLSXDropZone from './XLSXDropZone';
 
 
 class App extends Component {
@@ -115,6 +116,7 @@ class App extends Component {
           <h1 className='App-title'>Welcome to React</h1>
         </header>
         <button onClick={this.convert}>Convert</button>
+				<XLSXDropZone onChange={e => console.log(e)}/>
       </div>
     );
   }
