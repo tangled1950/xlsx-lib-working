@@ -3,7 +3,6 @@ import logo from './logo.svg';
 import './App.css';
 /* eslint import/no-webpack-loader-syntax: off */
 import XLSX from '../loaders/xlsx-loader!xlsx';
-//import XLSX from 'data-validation-xlsx';
 import saveAs from 'file-saver';
 import XLSXDropZone from './XLSXDropZone';
 
@@ -27,7 +26,9 @@ class App extends Component {
       Author: 'Alexandru Faina',
       CreatedDate: new Date()
     };
-    wb.SheetNames.push('New Sheet');
+    wb.SheetNames.push('Intro');
+    wb.SheetNames.push('Instructions');
+    wb.SheetNames.push('Validation');
     var ws = XLSX.utils.json_to_sheet([
       { Student: 'Euan'},
       { Student: 'Mary'},
@@ -50,7 +51,7 @@ class App extends Component {
       {sqref: 'B2:B99', type: 'list', values: ['Maths', 'English', 'History', 'Geography', 'Art', 'Science', 'Computers', 'French']},
       {sqref: 'C2:C99', type: 'decimal', operator: 'between', min:1, max: 10},
       {sqref: 'D2:D99', type: 'email'},
-      {sqref: 'E2:E99', type: 'phone_number'},
+      {sqref: 'E2:E99', type: 'phone'},
       {sqref: 'F2:F99', type: 'date', operator: 'between', start: '1/1/1900', end: '12/31/3000'},
       {sqref: 'G2:G99', type: 'list', values: ['Male', 'Female']}
     ];
@@ -98,28 +99,42 @@ class App extends Component {
     }
     ws['!ref']='A1:G99';
 
-    wb.Sheets['New Sheet'] = ws;
-    wb.Sheets['Sheet 2'] = {
-      A1: {v: 'Sheet 2'}
-    };
-    Object.assign(window, {ws, wb});
+    wb.Sheets['Validation'] = ws;
+    wb.Sheets['Intro'] = {
+			A1: {
+				t: 's', v: 'Intro',
+				s: {
+					fill: {
+						fgColor: {
+							rgb: 'ffff00'
+						}
+					},
+				},
+			},
+			'!ref': 'A1:G9',
+		};
+		wb.Sheets['Instructions'] = {
+			A1: {t: 's', v: 'Instructions'},
+			'!ref': 'A1:G9',
+		};
+		Object.assign(window, {ws, wb});
 
-    var wbout = XLSX.write(wb, {bookType: 'xlsx', type:'binary'});
+		var wbout = XLSX.write(wb, {bookType: 'xlsx', type:'binary'});
 
-    saveAs(new Blob([this.s2ab(wbout)], {type: 'application/octet-stream'}), 'dropdown.xlsx');
-  }
-  render() {
-    return (
-      <div className='App'>
-        <header className='App-header'>
-          <img src={logo} className='App-logo' alt='logo' />
-          <h1 className='App-title'>Welcome to React</h1>
-        </header>
-        <button onClick={this.convert}>Convert</button>
+		saveAs(new Blob([this.s2ab(wbout)], {type: 'application/octet-stream'}), 'dropdown.xlsx');
+	}
+	render() {
+		return (
+			<div className='App'>
+				<header className='App-header'>
+					<img src={logo} className='App-logo' alt='logo' />
+					<h1 className='App-title'>Welcome to React</h1>
+				</header>
+				<button onClick={this.convert}>Convert</button>
 				<XLSXDropZone onChange={e => console.log(e)}/>
-      </div>
-    );
-  }
+			</div>
+		);
+	}
 }
 
 export default App;
