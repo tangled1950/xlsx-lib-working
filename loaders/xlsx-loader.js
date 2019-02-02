@@ -497,6 +497,23 @@ var StyleBuilder = function (options) {
 			o += '<formula1>=ISNUMBER(MATCH(&quot;*@*.???&quot;,'+validation.sqref.split(':')[0]+',0))</formula1>';
 			o += '</dataValidation>';
 		}
+		else if(validation.type == "phone"){
+			var formula = '<dataValidation type="custom" allowBlank="1" showInputMessage="1" showErrorMessage="1" sqref="' + validation.sqref + '">';
+			var _cell = validation.sqref.split(':')[0];
+			formula += '<formula1>OR(IFERROR(IF(LEN(' + _cell +
+			')=10,VALUE(' + _cell +
+			')*0 + 1,FALSE),FALSE), IFERROR(IF(OR(LEN(' + _cell +
+			')=12,LEN(' + _cell + 
+			')=13),IF(AND(MID(' + _cell +
+			',4,1)=&quot;-&quot;,MID(' + _cell + 
+			',8,1)=&quot;-&quot;),VALUE(LEFT(' + _cell + 
+			',3) &amp; MID(' + _cell + 
+			',5,3) &amp; MID(' + _cell + 
+			',9,32767)) * 0 + 1,FALSE),FALSE),FALSE))</formula1>';
+			formula += '</dataValidation>';
+			console.info(formula);
+			o += formula;
+		}
 		else if(validation.type == "phone_number"){
 			o += '<dataValidation type="custom" allowBlank="1" showInputMessage="1" showErrorMessage="1" sqref="' + validation.sqref + '">';
 			o += '<formula1>=AND(ISNUMBER(SUMPRODUCT(SEARCH(MID('+validation.sqref.split(':')[0]+',ROW(INDIRECT(&quot;1:&quot;&amp;LEN('+validation.sqref.split(':')[0]+'))),1),&quot;0123456789&quot;))),LEN('+validation.sqref.split(':')[0]+')=9,'+validation.sqref.split(':')[0]+'&lt;&gt;&quot;123456789&quot;,'+validation.sqref.split(':')[0]+'&lt;&gt;&quot;987654321&quot;,'+validation.sqref.split(':')[0]+'&lt;&gt;&quot;000000000&quot;)</formula1>';
@@ -521,8 +538,6 @@ module.exports = function(input) {
   input = input.replace(/function write_zip_type.+\{/, (a) => a + `
     style_builder  = new StyleBuilder(opts);
   `);
-  var write_sty_xml = input.indexOf('function get_cell_style');
-  write_sty_xml = input.substr(write_sty_xml - 100, 500);
   const needle = `write_ws_xml_merges(ws['!merges']`;
   const start = input.indexOf(needle);
   const nextLineIndex = input.indexOf('\n', start);
