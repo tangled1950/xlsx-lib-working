@@ -466,23 +466,23 @@ var StyleBuilder = function (options) {
 	for(var i=0; i < validations.length; i++) {
 		var validation = validations[i];
     if(validation.type=="list"){
-      o += '<dataValidation type="list" allowBlank="1" sqref="' + validation.sqref + '" showInputMessage="1" showErrorMessage="1" errorTitle="sdfsadf" errorMessage="aaaadf">';
-      o += '<formula1>&quot;' + validation.values + '&quot;</formula1>';
+      o += '<dataValidation type="list" sqref="' + validation.sqref + '">';
+      o += '<formula1>"' + validation.values + '"</formula1>';
       o += '</dataValidation>';
     }
     else if(validation.type=="fixed"){
-			o += '<dataValidation type="custom" allowBlank="0" sqref="' + validation.sqref + '" showInputMessage="1" showErrorMessage="1" errorTitle="sdfsadf" errorMessage="aaaadf">';
+			o += '<dataValidation type="custom" sqref="' + validation.sqref + '">';
       o += '<formula1>=ISNUMBER(MATCH(&quot;' + validation.value +'&quot;))</formula1>';
 			o += '</dataValidation>';
 		}
 		else if(validation.type=="decimal"){
-			o += '<dataValidation type="decimal" operator="between" allowBlank="1" showInputMessage="1" showErrorMessage="1" sqref="' + validation.sqref + '">';
+			o += '<dataValidation type="decimal" operator="between" sqref="' + validation.sqref + '">';
 			o += '<formula1>' + validation.min + '</formula1>';
 			o += '<formula2>' + validation.max + '</formula2>';
 			o += '</dataValidation>';
 		}
 		else if(validation.type=="date"){
-			o += '<dataValidation type="date" operator="between" allowBlank="1" showInputMessage="1" showErrorMessage="1" sqref="' + validation.sqref + '">';
+			o += '<dataValidation type="date" operator="between" sqref="' + validation.sqref + '">';
 			o += '<formula1>' + (new Date(validation.start)).getTime()/1000 + '</formula1>';
 			o += '<formula2>' + (new Date(validation.end)).getTime()/1000 + '</formula2>';
 			o += '</dataValidation>';
@@ -494,7 +494,7 @@ var StyleBuilder = function (options) {
 		}
 		else if(validation.type == "email"){
 			o += '<dataValidation type="custom" allowBlank="1" showInputMessage="1" showErrorMessage="1" sqref="' + validation.sqref + '">';
-			o += '<formula1>=ISNUMBER(MATCH(&quot;*@*.???&quot;,'+validation.sqref.split(':')[0]+',0))</formula1>';
+			o += '<formula1>ISNUMBER(MATCH(&quot;*@*.???&quot;,'+validation.sqref.split(':')[0]+',0))</formula1>';
 			o += '</dataValidation>';
 		}
 		else if(validation.type == "phone"){
@@ -511,7 +511,6 @@ var StyleBuilder = function (options) {
 			',5,3) &amp; MID(' + _cell + 
 			',9,32767)) * 0 + 1,FALSE),FALSE),FALSE))</formula1>';
 			formula += '</dataValidation>';
-			console.info(formula);
 			o += formula;
 		}
 		else if(validation.type == "phone_number"){
@@ -521,6 +520,8 @@ var StyleBuilder = function (options) {
 		}
 	}
 	o += '</dataValidations>';
+  console.log('dataValidations');
+  console.log(o);
 	return o;
 };;
 `;

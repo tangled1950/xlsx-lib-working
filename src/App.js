@@ -49,7 +49,7 @@ class App extends Component {
     ws['!dataValidation'] =  [
       {sqref: 'A2:A99', type: 'alphabet'},
       {sqref: 'B2:B99', type: 'list', values: ['Maths', 'English', 'History', 'Geography', 'Art', 'Science', 'Computers', 'French']},
-      {sqref: 'C2:C99', type: 'decimal', operator: 'between', min:1, max: 10},
+      // {sqref: 'C2:C99', type: 'decimal', operator: 'between', min:1, max: 10},
       {sqref: 'D2:D99', type: 'email'},
       {sqref: 'E2:E99', type: 'phone'},
       {sqref: 'F2:F99', type: 'date', operator: 'between', start: '1/1/1900', end: '12/31/3000'},
@@ -59,9 +59,9 @@ class App extends Component {
       const c = String.fromCharCode(i + 65);
       const k = `${c}1`;
       if(!ws[k]) break;
-      ws['!dataValidation'].push({
-        sqref: k, type: 'fixed', value: ws[k].v
-      });
+      // ws['!dataValidation'].push({
+      //   sqref: k, type: 'fixed', value: ws[k].v
+      // });
       ws[k].s = {
         border: {
           top:    { style: 'medium', color: { rgb: '0000ff'}, width: 8},
